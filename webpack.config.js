@@ -1,4 +1,6 @@
 var path = require("path");
+var webpack = require("webpack");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -11,12 +13,22 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        use: ["babel-loader","eslint-loader"]
       },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
       }
     ]
-  }
+  },
+  devServer: {
+    contentBase: "./dist",
+    hot: true
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html"
+    }),
+    new webpack.HotModuleReplacementPlugin({})
+  ]
 };
